@@ -3,7 +3,10 @@
 // @name IITC Plugin: Draw All To One.
 // @category Controls
 // @version 0.0.1
-// @namespace https://tempuri.org/iitc/hello
+// @namespace https://github.com/Donchurru/Plugins-IITC/tree/develop/iitc-bookmarks-draw-all-to-one
+// @updateURL      https://github.com/Donchurru/Plugins-IITC/blob/develop/iitc-bookmarks-draw-all-to-one/iitc-bookmarks-draw-all-to-one.js
+// @downloadURL    https://raw.githubusercontent.com/Donchurru/Plugins-IITC/develop/iitc-bookmarks-draw-all-to-one/iitc-bookmarks-draw-all-to-one.js
+// @author Donchurru
 // @description Draw one portal to others portal in the same folder
 // @include        https://*.ingress.com/intel*
 // @include        http://*.ingress.com/intel*
