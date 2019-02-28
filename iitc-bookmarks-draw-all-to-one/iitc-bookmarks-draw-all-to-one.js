@@ -2,7 +2,7 @@
 // @id iitc-bookmarks-draw-all-to-one
 // @name IITC Plugin: Draw All To One.
 // @category Controls
-// @version 0.0.1
+// @version 0.0.2
 // @namespace https://github.com/Donchurru/Plugins-IITC/tree/master/iitc-bookmarks-draw-all-to-one
 // @updateURL      https://github.com/Donchurru/Plugins-IITC/blob/master/iitc-bookmarks-draw-all-to-one/iitc-bookmarks-draw-all-to-one.js
 // @downloadURL    https://raw.githubusercontent.com/Donchurru/Plugins-IITC/master/iitc-bookmarks-draw-all-to-one/iitc-bookmarks-draw-all-to-one.js
@@ -100,6 +100,44 @@ function wrapper(plugin_info) {
         } else {
             window.plugin.bookmarks.autoDrawOnSelectOriginal();
         }
+    }
+
+    window.plugin.bookmarks.dialogDrawerOriginal =  window.plugin.bookmarks.dialogDrawer;
+    window.plugin.bookmarks.dialogDrawer = function () {
+      window.plugin.bookmarks.dialogDrawerOriginal();
+        var btnFolder = '<button type="button" onclick="window.plugin.bookmarks.drawFolder(this);return false;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" style="float: right;margin: 0 3px 3px 0;"><span class="ui-button-text">Draw All</span></button>'
+        $('div.bookmarkFolder').each(function() {
+            $(this).prepend(btnFolder);
+        });
+    }
+
+    window.plugin.bookmarks.drawFolder = function (btn) {
+      if ($('#bkmrksAutoDrawer a.bkmrk.selected').length == 0 || $('#bkmrksAutoDrawer a.bkmrk.selected').length > 2) {
+        $('#bkmrksAutoDrawer p')
+            .html("You must select 1 or 2 portals.")
+            .css("color", "red");
+        alert("You must select 1 or 2 portals.");
+      } else {
+        var originalColor = window.plugin.drawTools.currentColor;
+        $('#bkmrksAutoDrawer a.bkmrk.selected').each(function() {
+            var tt = $(this).data('latlng');
+            $(btn).siblings('div').find('a.bkmrk').each(function() {
+                var latlngsbr = [];
+                latlngsbr[0] = tt;
+                latlngsbr[1] = $(this).data('latlng');
+                var layer = L.geodesicPolyline(latlngsbr, window.plugin.drawTools.lineOptions);
+                var layerType = 'polyline';
+                map.fire('draw:created', {
+                    layer: layer,
+                    layerType: layerType
+                });
+            });
+            if (originalColor != "#4aa8c3") {
+                window.plugin.drawTools.setDrawColor("#4aa8c3");
+            }
+        });
+        window.plugin.drawTools.setDrawColor(originalColor);
+      }
     }
   }
 
