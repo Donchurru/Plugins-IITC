@@ -137,6 +137,22 @@ function wrapper(plugin_info) {
             }
         });
         window.plugin.drawTools.setDrawColor(originalColor);
+        if($('#bkmrkClearSelection').prop('checked')){
+            $('#bkmrksAutoDrawer a.bkmrk.selected').removeClass('selected');
+        }
+
+        if(window.plugin.bookmarks.isSmart) {
+            window.show('map');
+        }
+
+        // Shown the layer if it is hidden
+        if(!map.hasLayer(window.plugin.drawTools.drawnItems)) {
+            map.addLayer(window.plugin.drawTools.drawnItems);
+        }
+
+        if(view) {
+            map.fitBounds(layer.getBounds());
+        }
       }
     }
   }
